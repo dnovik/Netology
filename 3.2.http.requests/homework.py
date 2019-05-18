@@ -4,13 +4,8 @@ API_KEY = 'trnsl.1.1.20161025T233221Z.47834a66fd7895d0.a95fd4bfde5c1794fa4334539
 
 
 
-def translator():
+def translator(from_lang, to_lang, source_file, destination_file):
     # главная функция, которая уточняет необходимые данные и возвращает перевод
-
-    from_lang = input('С какого языка переводим: ').capitalize()
-    to_lang = input('На какой язые переводим: ').capitalize()
-    source_file = input('Путь к файлу с исходным текстом: ')
-    destination_file = input('Путь к файлу для записи перевода')
 
     from_lang_id = get_lang_id(from_lang)
     to_lang_id = get_lang_id(to_lang)
