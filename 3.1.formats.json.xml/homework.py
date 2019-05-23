@@ -1,9 +1,10 @@
 import json
-from pprint import pprint
 import xml.etree.ElementTree as ET
 
 file_xml = r'newsafr.xml'
 file_json = r'newsafr.json'
+
+
 
 def get_text_from_json(file):
     # функция читает файл json и возвращает список слов больше 6 символов
@@ -42,7 +43,6 @@ def get_text_from_xml(file):
 
 
 
-
 def get_text_from_file(file):
     # функция проверяет формат файла и вызывает соответствующую функцию чтения файла или возвращает ошибку
 
@@ -61,6 +61,7 @@ def get_word_stat(words):
     # функция возвращает словарь частотности слов на основе текста новостей
 
     words_stat = dict()
+    
     for word in words:
         if word not in words_stat:
             words_stat[word] = 1
@@ -76,12 +77,16 @@ def get_top_words(file):
 
     text = get_text_from_file(file)
     word_stat = get_word_stat(text)
+    rates = sorted(list(set(word_stat.values())))[-10:-1]
 
-    sorted_list = sorted(word_stat.values(), reverse=True)[0:11]
+
+    top_words = {}
 
     for key, value in word_stat.items():
-        if value in sorted_list:
-            print(key, value)
+        if value in rates:
+            top_words[key] = value
 
-    
-get_top_words(file_json)
+    return top_words
+
+
+get_top_words((file_json))
