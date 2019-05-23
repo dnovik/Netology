@@ -77,8 +77,15 @@ def get_top_words(file):
 
     text = get_text_from_file(file)
     word_stat = get_word_stat(text)
-    rates = sorted(list(set(word_stat.values())))[-10:-1]
+    rates = sorted(list(set(word_stat.values())), reverse=True)[0:10]
 
+
+    top_words = {}
+
+    for rate in rates:
+        for key, value in word_stat.items():
+            if rate == value:
+                print(key, value)
 
     top_words = {}
 

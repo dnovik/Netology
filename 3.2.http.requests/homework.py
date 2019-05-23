@@ -4,19 +4,14 @@ API_KEY = 'trnsl.1.1.20161025T233221Z.47834a66fd7895d0.a95fd4bfde5c1794fa4334539
 
 
 
-def translator():
+def translator(from_lang, to_lang, source_file, destination_file):
     # главная функция, которая уточняет необходимые данные и возвращает перевод
-
-    from_lang = input('С какого языка переводим: ').capitalize()
-    to_lang = input('На какой язые переводим: ').capitalize()
-    source_file = input('Путь к файлу с исходным текстом: ')
-    destination_file = input('Путь к файлу для записи перевода')
 
     from_lang_id = get_lang_id(from_lang)
     to_lang_id = get_lang_id(to_lang)
 
     
-    translation = translate_text(source_file)
+    translation = translate_text(source_file, from_lang_id, to_lang_id)
     write_translation(translation, destination_file)
 
 
@@ -46,7 +41,7 @@ def get_lang_id(language_name):
 
 
 
-def translate_text(source_file):
+def translate_text(source_file, from_lang_id, to_lang):
     # функция принимает на вход файл с исходным текстом и передает его на API для перевода
     
     translate_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
@@ -54,10 +49,11 @@ def translate_text(source_file):
     with open(source_file) as file:
         
         text = file.read()
+        
         params = {
             'key' : API_KEY,
             'text' : text,
-            'lang' : 'ru',
+            'lang' : {from_lang_id : to_lang},
             'format' : 'plain'
         }
     
@@ -69,7 +65,11 @@ def translate_text(source_file):
 
 
 def write_translation(translation, destination_file):
-    # функция принимает на вход  перевод и путь для записи файла
+    # функция принимает на вход перевод и путь для записи файла
     
-     with open(destination_file, 'w') as file:
+     with open(destination_file, 'w', encoding='utf-8') as file:
             file.write(translation)
+
+
+
+translator()
