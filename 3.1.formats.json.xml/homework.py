@@ -24,50 +24,6 @@ def get_text_from_json(file):
 
 
 
-def get_word_stat(words):
-    # функция возвращает словарь частотности слов на основе текста новостей
-
-    words_stat = dict()
-    for word in words:
-        if word not in words_stat:
-            words_stat[word] = 1
-        else:
-            words_stat[word] += 1
-
-    return words_stat
-
-
-
-def get_unique_rating(word_stat):
-    # функция получает все значения частоты упоминаемости слов и возвращает их уникальные значения
-
-    rating = set()
-    rates = list()
-    for stat_value in word_stat.values():
-        rating.add(stat_value)
-
-    for rate in rating:
-        rates.append(rate)
-        rates = sorted(rates, reverse=True)
-
-    return rates[0:10]
-
-
-
-def find_top_words(rates, word_stat):
-    # функция возвращает наиболее упоминаемые слова на основе списка уникальных значений частот
-
-    top_words = []
-    for key, val in word_stat.items():
-        if val in rates:
-            top_words.append({
-                key : val
-                })
-    
-    return top_words
-
-
-
 def get_text_from_xml(file):
     # функция читает файл xml и возвращает список слов больше 6 символов
 
@@ -86,6 +42,7 @@ def get_text_from_xml(file):
 
 
 
+
 def get_text_from_file(file):
     # функция проверяет формат файла и вызывает соответствующую функцию чтения файла или возвращает ошибку
 
@@ -98,17 +55,33 @@ def get_text_from_file(file):
     else:
         print('Неизвестный формат')
 
+
+
+def get_word_stat(words):
+    # функция возвращает словарь частотности слов на основе текста новостей
+
+    words_stat = dict()
+    for word in words:
+        if word not in words_stat:
+            words_stat[word] = 1
+        else:
+            words_stat[word] += 1
+
+    return words_stat
+
+
+
 def get_top_words(file):
     # возвращает список наиболее упоминаемых слов длинною более 6 символов
 
     text = get_text_from_file(file)
     word_stat = get_word_stat(text)
-    rates = get_unique_rating(word_stat)
-    top_words = find_top_words(rates, word_stat)
+
+    sorted_list = sorted(word_stat.values(), reverse=True)[0:11]
+
+    for key, value in word_stat.items():
+        if value in sorted_list:
+            print(key, value)
+
     
-    return top_words
-
-
-get_top_words('newsafr.xml')
-get_top_words('newsafr.json')
-
+get_top_words(file_json)
