@@ -19,7 +19,7 @@ def get_text_from_json(file):
 
             for word in text:
                 if len(word) > 6:
-                    words.append(word)
+                    words.append(word.lower())
         
     return words
 
@@ -37,7 +37,7 @@ def get_text_from_xml(file):
 
         for word in text:
                 if len(word) > 6:
-                    words.append(word)
+                    words.append(word.lower())
 
     return words
 
@@ -87,13 +87,5 @@ def get_top_words(file):
             if rate == value:
                 print(key, value)
 
-    top_words = {}
-
-    for key, value in word_stat.items():
-        if value in rates:
-            top_words[key] = value
-
-    return top_words
-
-
 get_top_words((file_json))
+
